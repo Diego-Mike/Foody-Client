@@ -1,15 +1,21 @@
-import UserWelcome from "@/components/molecules/home/UserWelcome";
+"use client";
+import { HomeFood } from "@/apiCalls/types";
 import { FC } from "react";
+import HomeFeedLoading from "@/components/molecules/negocio/HomeFeedLoading";
+import HomeFoods from "./HomeFoods";
 
 interface Props {
   loading: boolean;
+  businesses?: HomeFood;
 }
 
-const UserFeed: FC<Props> = ({ loading }) => {
+const UserFeed: FC<Props> = ({ businesses, loading }) => {
   return (
-    <section className="w-[98%] m-auto mt-3 min-h-screen">
-      {/* user card, welcome ! */}
-      <UserWelcome loading={loading} />
+    <section className="flex justify-center w-full">
+      {/* foods */}
+      <div className="w-[60%] pt-10 pr-28">
+        {loading ? <HomeFeedLoading /> : <HomeFoods businesses={businesses!} />}
+      </div>
     </section>
   );
 };

@@ -7,7 +7,6 @@ interface Props {
   socialMediaPlatform: string;
   imgWidth: number;
   imgHeight: number;
-  textExtraStyles: string;
   text: string;
 }
 
@@ -17,7 +16,6 @@ const SocialMediaBtn: FC<Props> = ({
   socialMediaPlatform,
   imgHeight,
   imgWidth,
-  textExtraStyles,
   text,
 }) => {
   return (
@@ -32,7 +30,7 @@ const SocialMediaBtn: FC<Props> = ({
         width={imgHeight}
         height={imgWidth}
       />
-      <span className={`ml-4 font-medium ${textExtraStyles}`}>{text}</span>
+      <span className={`ml-4 font-medium text-white`}>{text}</span>
     </a>
   );
 };

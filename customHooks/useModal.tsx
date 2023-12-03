@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+// FIXME: update atomic test
 export const useModal = (
   initMode: boolean
 ): { isShowing: boolean; toggle: () => void } => {
@@ -8,6 +9,14 @@ export const useModal = (
   const toggle = () => {
     setIsShowing(!isShowing);
   };
+
+  useEffect(() => {
+    if (isShowing === true) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isShowing]);
 
   return { isShowing, toggle };
 };

@@ -1,8 +1,10 @@
-import LoginHeader from "@/components/atoms/Home/LoginHeader";
-import SocialMediaBtn from "@/components/atoms/Home/SocialMediaBtn";
-import { getGoogleAuthUrl } from "@/utils";
+import LoginHeader from "@/components/atoms/home/LoginHeader";
+import SocialMediaBtn from "@/components/atoms/home/SocialMediaBtn";
+import { getFacebookAuthUrl, getGoogleAuthUrl } from "@/utils";
 
 const LoginOptions = () => {
+  // FIXME: when making the request, inhabilitate to select other options
+
   return (
     <div className="flex flex-col items-center w-full h-full">
       <LoginHeader />
@@ -14,7 +16,6 @@ const LoginOptions = () => {
         socialMediaPlatform="google"
         socialMediaUrl={getGoogleAuthUrl}
         text="Continuar con Google"
-        textExtraStyles="text-black text-opacity-50"
       />
 
       <SocialMediaBtn
@@ -22,29 +23,26 @@ const LoginOptions = () => {
         imgHeight={26}
         imgWidth={26}
         socialMediaPlatform="facebook"
-        socialMediaUrl={() => ""}
+        socialMediaUrl={getFacebookAuthUrl}
         text="Continuar con Facebook"
-        textExtraStyles="text-white"
       />
 
       <SocialMediaBtn
-        containerExtraStyles="mt-7 bg-black"
+        containerExtraStyles="mt-7 bg-black opacity-40 pointer-events-none"
         imgHeight={28}
         imgWidth={28}
         socialMediaPlatform="tiktok"
         socialMediaUrl={() => ""}
         text="Continuar con TikTok"
-        textExtraStyles="text-white"
       />
 
       <SocialMediaBtn
-        containerExtraStyles="mt-7 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"
+        containerExtraStyles="mt-7 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 opacity-40 pointer-events-none"
         imgHeight={29}
         imgWidth={29}
         socialMediaPlatform="instagram"
         socialMediaUrl={() => ""}
         text="Continuar con Instagram"
-        textExtraStyles="text-white"
       />
     </div>
   );

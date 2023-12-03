@@ -1,67 +1,75 @@
-import { ServerResponse, userApi } from "@/apiCalls/users";
-import Navbar from "@/components/organisms/home/Navbar";
+import { foodyApi } from "@/apiCalls";
+import { GetUserRsp, HomeFood, SuccessfullResponse } from "@/apiCalls/types";
+import Leftbar from "@/components/organisms/home/Leftbar";
 import UserFeed from "@/components/organisms/home/UserFeed";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
+import RightsideBar from "@/components/organisms/home/RightsideBar";
 
-interface User {
-  accessToken: string;
-  user: any;
+// FIXME: set global scroll bar for the website
+// FIXME: revalidating too fast, we don't need to call the API when we come back to the home page
+
+interface HomeData {
+  user?: GetUserRsp;
+  foods: HomeFood;
 }
 
-const fetchUser = async (): Promise<User | undefined> => {
-  // get access token
-  const refreshToken = cookies().get("refresh-token");
+const fetchHome = async (): Promise<HomeData> => {
+  const refreshToken = cookies().get("refresh-token")?.value;
+  const accessToken =
+    cookies().get("access-token")?.value || headers().get("access-token");
+  // console.log("access token", accessToken);
+  // console.log("refresh token", refreshToken);
+
+  let user: GetUserRsp | undefined = undefined;
+  let homeFeedFods: HomeFood = { home_food: [], next_page: 0 };
+
   if (!refreshToken) {
-    return undefined;
+    await foodyApi
+      .get<SuccessfullResponse<HomeFood>>(
+        "/businesses?pageSize=6&afterBusiness=0"
+      )
+      .then(({ data }) => {
+        homeFeedFods = data.rsp;
+      });
+  } else {
+    await Promise.all([
+      foodyApi.get<SuccessfullResponse<{ user: GetUserRsp }>>("/users/me", {
+        headers: {
+          Cookie: [
+            `refresh-token=${refreshToken}`,
+            `access-token=${accessToken}`,
+          ],
+        },
+      }),
+      foodyApi.get<SuccessfullResponse<HomeFood>>(
+        "/businesses?pageSize=6&afterBusiness=0"
+      ),
+    ]).then(([getUser, getFood]) => {
+      // console.log("use data", getUser.data.rsp.user.user_reservation);
+      user = getUser.data.rsp.user;
+      homeFeedFods = getFood.data.rsp;
+    });
   }
 
-  const getAccessToken = await userApi.post<ServerResponse<string>>(
-    "/access-token",
-    {},
-    {
-      headers: {
-        Cookie: cookies().toString(),
-      },
-    }
-  );
-
-  if (getAccessToken.status === 401) {
-    console.log(`unauthorized to get access token`);
-    return undefined;
-  }
-
-  userApi.defaults.headers.common.Authorization = `Bearer ${getAccessToken.data.data}`;
-
-  // get user
-  const getUser = await userApi.get<ServerResponse<User>>("/user/me", {
-    headers: {
-      Cookie: cookies().toString(),
-    },
-  });
-
-  if (getUser.status === 401) {
-    console.log(`unauthorized to get user`);
-    return undefined;
-  }
-
-  return { accessToken: getAccessToken.data.data!, user: getUser.data.data };
+  return {
+    user: user,
+    foods: homeFeedFods,
+  };
 };
 
 export default async function Home() {
-  const user = await fetchUser();
-
-  // TODO: add animation after loading, show data smoothly
+  const homeData = await fetchHome();
 
   return (
-    <section className="w-full min-h-screen bg-gradient-to-br from-[rgba(252,237,227,0.40)] via-[rgba(255,246,216,0.40)] to-[rgba(255,246,216,0.42)]">
-      <Navbar
+    <main className="flex flex-col items-center w-full min-h-screen">
+      <Leftbar
         loading={false}
-        loggedIn={user ? true : false}
-        user={user?.user}
-        accessToken={user?.accessToken}
+        loggedIn={homeData.user ? true : false}
+        user={homeData.user}
       />
-      <UserFeed loading={false} />
-    </section>
+      <UserFeed businesses={homeData.foods} loading={false} />
+      <RightsideBar />
+    </main>
   );
 }

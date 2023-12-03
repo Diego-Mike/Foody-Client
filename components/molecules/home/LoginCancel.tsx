@@ -1,15 +1,13 @@
 import { FC } from "react";
 
-import LoginCancelBtn from "@/components/atoms/Home/LoginCancelBtn";
+import LoginCancelBtn from "@/components/atoms/home/LoginCancelBtn";
 
-interface Props {
-  toggle: () => void;
-}
+interface Props {}
 
-const LoginCancel: FC<Props> = ({ toggle }) => {
+const LoginCancel: FC<Props> = () => {
   return (
     <div className="w-full h-[10%] flex items-center justify-end">
-      <LoginCancelBtn toggle={toggle} />
+      <LoginCancelBtn />
     </div>
   );
 };
