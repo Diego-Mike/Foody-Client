@@ -12,7 +12,7 @@ const CreateBusiness = () => {
     if (user.is_business_member || user.username === "") {
       route.push("/");
     }
-  }, []);
+  });
 
   return (
     <main className="bg-[rgb(38,40,54)]">

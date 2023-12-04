@@ -53,7 +53,7 @@ const FoodModal: FC<Props> = ({ toggle }) => {
   useEffect(() => {
     register("price", { required: true });
     register("foodAvailable", { required: false });
-  }, []);
+  });
 
   const urlParams = useParams<{ "business-id": string }>();
   const { mutate, error } = useCreateFood(urlParams["business-id"], toggle);

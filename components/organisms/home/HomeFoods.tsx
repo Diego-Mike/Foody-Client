@@ -27,7 +27,7 @@ const HomeFoods: FC<Props> = ({ businesses }) => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, hasNextPage, fetchNextPage]);
 
   return (
     <>
