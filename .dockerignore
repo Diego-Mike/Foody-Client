@@ -1,8 +1,0 @@
-# add git-ignore syntax here of things you don't want copied into docker image
-.gitignore
-.git
-.results
-*Dockerfile*
-node_modules
-.env
-.env.local
