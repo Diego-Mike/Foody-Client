@@ -5,7 +5,7 @@ import BusinessInfo, {
 import BusinessUbication, {
   BusinessUbicationProps,
 } from "@/components/molecules/negocio/BusinessUbication";
-import { useUpdateUserAccess } from "@/customHooks";
+// import { useUpdateUserAccess } from "@/customHooks";
 import { FC } from "react";
 
 interface Props {
@@ -19,7 +19,7 @@ const BusinessHeader: FC<Props> = ({
   accessToken,
   businessUbication,
 }) => {
-  useUpdateUserAccess({ accessToken });
+  // useUpdateUserAccess({ accessToken });
 
   return (
     <header className="relative w-full mt-4 h-[345px] rounded-xl">

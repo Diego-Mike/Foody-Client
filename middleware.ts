@@ -13,7 +13,7 @@ export const middleware = async (req: NextRequest) => {
   if (!currentAccessToken) {
     try {
       const generateAccessToken = await fetch(
-        "http://localhost:8000/access-token",
+        `${process.env.FOODY_API}/access-token`,
         {
           method: "POST",
           headers: {
@@ -40,7 +40,7 @@ export const middleware = async (req: NextRequest) => {
         }>;
       response.cookies.set("access-token", newAccesToken.rsp.access_token, {
         path: "/",
-        domain: "localhost",
+        domain: process.env.FOODY_WEB_DOMAIN,
         maxAge: +process.env.ACCESS_TOKEN_TIME!,
         httpOnly: true,
         secure: TransformSecureCookieEnv(),

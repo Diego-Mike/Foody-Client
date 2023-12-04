@@ -1,5 +1,4 @@
-import { cookies, headers } from "next/headers";
-import { foodyApi } from "@/apiCalls/ServerSide";
+import { cookies } from "next/headers";
 import BusinessHeader from "@/components/organisms/negocio/BusinessHeader";
 import { redirect } from "next/navigation";
 import BusinessAsideBar from "@/components/organisms/negocio/BusinessAsideBar";
@@ -10,58 +9,59 @@ interface BusinessFetch {
   accessToken?: string;
 }
 
-const fetchBusiness = async (
-  businessId: string
-): Promise<BusinessFetch | undefined> => {
-  // FIXME: protect routes, if not signed in, redirect them to home page
-  const refreshToken = cookies().get("refresh-token");
-  // console.log("refresh token", refreshToken);
-  if (!refreshToken) {
-    return undefined;
-  }
+// const fetchBusiness = async (
+//   businessId: string
+// ): Promise<BusinessFetch | undefined> => {
+//   // FIXME: protect routes, if not signed in, redirect them to home page
+//   const refreshToken = cookies().get("refresh-token");
+//   // console.log("refresh token", refreshToken);
+//   if (!refreshToken) {
+//     return undefined;
+//   }
 
-  const accessToken = foodyApi.defaults.headers.common.Authorization;
-  let newAccessToken: string | undefined = undefined;
-  console.log("access token server side", accessToken);
+//   const accessToken = foodyApi.defaults.headers.common.Authorization;
+//   let newAccessToken: string | undefined = undefined;
+//   console.log("access token server side", accessToken);
 
-  if (!accessToken) {
-    // console.log("get new access token");
-    const getAccessToken = await foodyApi.post<
-      SuccessfullResponse<{ access_token: string }>
-    >(
-      "/access-token",
-      {},
-      {
-        headers: {
-          Cookie: cookies().toString(),
-        },
-      }
-    );
-    newAccessToken = getAccessToken.data.rsp.access_token;
-    foodyApi.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
-    // console.log("access token", getAccessToken.data);
-  }
+//   if (!accessToken) {
+//     // console.log("get new access token");
+//     const getAccessToken = await foodyApi.post<
+//       SuccessfullResponse<{ access_token: string }>
+//     >(
+//       "/access-token",
+//       {},
+//       {
+//         headers: {
+//           Cookie: cookies().toString(),
+//         },
+//       }
+//     );
+//     newAccessToken = getAccessToken.data.rsp.access_token;
+//     foodyApi.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+//     // console.log("access token", getAccessToken.data);
+//   }
 
-  // get business
-  const business = await foodyApi.get<SuccessfullResponse<Business>>(
-    `/businesses/${businessId}`,
-    {
-      headers: {
-        Cookie: cookies().toString(),
-      },
-    }
-  );
+//   // get business
+//   const business = await foodyApi.get<SuccessfullResponse<Business>>(
+//     `/businesses/${businessId}`,
+//     {
+//       headers: {
+//         Cookie: cookies().toString(),
+//       },
+//     }
+//   );
 
-  // console.log("response", business.data);
+//   // console.log("response", business.data);
 
-  return {
-    business: business.data.rsp,
-    accessToken: newAccessToken,
-  };
-};
+//   return {
+//     business: business.data.rsp,
+//     accessToken: newAccessToken,
+//   };
+// };
 
 const Business = async ({ params }: { params: { "business-id": string } }) => {
-  const businessData = await fetchBusiness(params["business-id"]);
+  const businessData = undefined;
+  //await fetchBusiness(params["business-id"]);
 
   // FIXME: change this, if api return 404, that means business does not exist
   if (!businessData) {
@@ -71,7 +71,7 @@ const Business = async ({ params }: { params: { "business-id": string } }) => {
   return (
     <main className="bg-[rgb(38,40,54)] min-h-screen">
       <div className="w-[97%] flex flex-col justify-center m-auto">
-        <BusinessHeader
+        {/* <BusinessHeader
           businessInfo={{
             businessTitle: {
               businessAddress: businessData?.business.address,
@@ -84,14 +84,14 @@ const Business = async ({ params }: { params: { "business-id": string } }) => {
             lng: parseFloat(businessData.business.longitude),
           }}
           accessToken={businessData.accessToken}
-        />
+        /> */}
 
         {/* content */}
         <div className="flex justify-between w-full mt-5">
-          <BusinessAsideBar
+          {/* <BusinessAsideBar
             presentation={businessData.business.presentation}
             clients_max_amount={businessData.business.clients_max_amount}
-          />
+          /> */}
           {/* food to order */}
           <section className="w-[75%]">
             <h2 className="text-xl font-medium text-white">

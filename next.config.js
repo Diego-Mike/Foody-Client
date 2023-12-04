@@ -8,6 +8,7 @@ const nextConfig = {
       { protocol: "https", hostname: "utfs.io", pathname: "/f/**" },
     ],
   },
+  output: "standalone",
 };
 
 module.exports = nextConfig;
