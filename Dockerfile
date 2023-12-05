@@ -12,7 +12,7 @@ FROM base as builder
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
-COPY .env.example .env.production
+COPY .env.example .env.local
 RUN yarn build
 
 # prod image
