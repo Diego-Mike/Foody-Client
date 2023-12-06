@@ -1,6 +1,11 @@
 export const getGoogleAuthUrl = (): string => {
   const rootUrl = "https://accounts.google.com/o/oauth2/auth";
 
+  console.log("google oauth option", {
+    redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_REDIRECT_URL,
+    client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+  });
+
   const options = {
     redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_REDIRECT_URL as string,
     client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
@@ -12,7 +17,7 @@ export const getGoogleAuthUrl = (): string => {
       "https://www.googleapis.com/auth/userinfo.email",
     ].join(" "),
   };
-  console.log("google oauth option", { options });
+  // console.log("google oauth option", { options });
   const qs = new URLSearchParams(options);
   // console.log(qs.toString());
 
