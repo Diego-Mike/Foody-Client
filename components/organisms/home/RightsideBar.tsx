@@ -15,7 +15,7 @@ const RightsideBar = () => {
     reservation?.foods?.length > 0 && reservation?.business_id !== 0;
   const reservationMade = reservation?.reservation_id !== 0;
 
-  console.log("my reservation", reservation);
+  // console.log("my reservation", reservation);
 
   const searchParams = useSearchParams();
   const reservationView = searchParams.get("reservacion");

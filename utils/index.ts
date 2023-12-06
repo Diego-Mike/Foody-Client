@@ -12,7 +12,7 @@ export const getGoogleAuthUrl = (): string => {
       "https://www.googleapis.com/auth/userinfo.email",
     ].join(" "),
   };
-  // console.log({ options });
+  console.log("google oauth option", { options });
   const qs = new URLSearchParams(options);
   // console.log(qs.toString());
 
