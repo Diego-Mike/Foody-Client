@@ -18,7 +18,7 @@ RUN yarn build
 # prod image
 FROM base AS runner
 WORKDIR /app
-ARG RAILWAY_ENVIRONMENT
+ARG NEXT_PUBLIC_GOOGLE_CLIENT_ID
 ENV NODE_ENV=production
 ENV NEXT_SHARP_PATH=/app/node_modules/sharp
 RUN addgroup -g 1001 -S nodejs
