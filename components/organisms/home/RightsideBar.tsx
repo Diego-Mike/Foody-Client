@@ -20,9 +20,9 @@ const RightsideBar = () => {
   const searchParams = useSearchParams();
   const reservationView = searchParams.get("reservacion");
 
-  console.log("google oauth option", {
-    googleClientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-  });
+  // console.log("google oauth option", {
+  //   googleClientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+  // });
 
   return (
     <AnimatePresence>
