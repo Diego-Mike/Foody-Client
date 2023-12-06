@@ -1,10 +1,10 @@
 export const getGoogleAuthUrl = (): string => {
   const rootUrl = "https://accounts.google.com/o/oauth2/auth";
 
-  console.log("google oauth option", {
-    redirect_uri: process.env.FOODY_API,
-    client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-  });
+  // console.log("google oauth option", {
+  //   redirect_uri: process.env.FOODY_API,
+  //   client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+  // });
 
   const options = {
     redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_REDIRECT_URL as string,
