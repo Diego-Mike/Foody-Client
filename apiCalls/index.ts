@@ -2,7 +2,10 @@ import axios, { AxiosError } from "axios";
 import { SuccessfullResponse } from "./types";
 
 export const foodyApi = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_FOODY_API,
+  baseURL:
+    typeof window === "undefined"
+      ? process.env.FOODY_API
+      : process.env.NEXT_PUBLIC_FOODY_API,
   headers: {
     "foody-api-key": process.env.NEXT_PUBLIC_FOODY_API_KEY,
   },
