@@ -7,7 +7,10 @@ export const foodyApi = axios.create({
       ? process.env.FOODY_API
       : process.env.NEXT_PUBLIC_FOODY_API,
   headers: {
-    "foody-api-key": process.env.NEXT_PUBLIC_FOODY_API_KEY,
+    "foody-api-key":
+      typeof window === "undefined"
+        ? process.env.FOODY_API_KEY
+        : process.env.NEXT_PUBLIC_FOODY_API_KEY,
   },
   withCredentials: true,
   timeout: 10000,
