@@ -24,6 +24,12 @@ const fetchHome = async (): Promise<HomeData> => {
   let user: GetUserRsp | undefined = undefined;
   let homeFeedFods: HomeFood = { home_food: [], next_page: 0 };
 
+  console.log(
+    "foody api env url ----> client",
+    process.env.NEXT_PUBLIC_FOODY_API
+  );
+  console.log("foody api env url ----> server", process.env.FOODY_API);
+
   if (!refreshToken) {
     await foodyApi
       .get<SuccessfullResponse<HomeFood>>(
