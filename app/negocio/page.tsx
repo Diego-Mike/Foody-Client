@@ -9,7 +9,7 @@ const CreateBusiness = () => {
   const route = useRouter();
   const user = useStore((store) => store.user);
   useEffect(() => {
-    if (user.is_business_member || user.username === "") {
+    if (user.username === "") {
       route.push("/");
     }
   });

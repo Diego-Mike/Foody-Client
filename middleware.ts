@@ -56,5 +56,5 @@ export const middleware = async (req: NextRequest) => {
 };
 
 export const config = {
-  matcher: ["/"],
+  matcher: ["/", "/negocio/:business-id/admin/configuraciones"],
 };
